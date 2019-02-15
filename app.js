@@ -17,26 +17,20 @@ const argv = yargs
 
 let address = encodeURIComponent(argv.address);
 
-request(
-    {
-        url: `http://www.mapquestapi.com/geocoding/v1/address?key=${
-            config.KEY
-        }&location=${address}`,
+request({
+        url: `http://www.mapquestapi.com/geocoding/v1/address?key=${config.KEY}&location=${address}`,
         json: true
     },
     (error, response, body) => {
+        // console.log(body);
         if (error) {
             console.log("Could not connect to the server");
-        } else if (body.status === "ZERO_RESULTS") {
+        } else if (body == undefined) {
             console.log("Unable to find that address");
-        } else {
-            console.log(
-                `Address: ${body.results[0].providedLocation.location}`
-            );
+        } else if (response.statusCode === 200) {           
+            console.log(`Address: ${body.results[0].providedLocation.location}`);
             console.log(`Latitude: ${body.results[0].locations[0].latLng.lat}`);
-            console.log(
-                `Longitude: ${body.results[0].locations[0].latLng.lng}`
-            );
+            console.log(`Longitude: ${body.results[0].locations[0].latLng.lng}`);
         }
     }
 );
