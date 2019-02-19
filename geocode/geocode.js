@@ -5,7 +5,7 @@ const geocodeAddress = (address, callback) => {
     let add = encodeURIComponent(address);
 
     request({
-            url: `http://www.mapquestapi.com/geocoding/v1/address?key=${config.KEY}&location=${add}`,
+            url: `http://www.mapquestapi.com/geocoding/v1/address?key=${config.mapQuestKey}&location=${add}`,
             json: true
         },
         (error, response, body) => {
